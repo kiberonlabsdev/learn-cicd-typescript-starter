@@ -4,10 +4,11 @@ on:
   
 jobs:
 
-  deppoy:
+  deploy:
     name: Deploy
     runs-on: ubuntu-latest
-
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -32,6 +33,11 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Migrate database
+        # Ignore errors if the database is already migrated
+        run: |
+          npm run db:migrate || true
 
       - name: Build project
         run: npm run build
