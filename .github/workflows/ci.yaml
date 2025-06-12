@@ -19,4 +19,5 @@ jobs:
           node-version: 18
 
       - name: Show version
-        run: node --version
+        run:  (exit 1)
+        # run: node --version
